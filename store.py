@@ -34,7 +34,7 @@ class Store:
         itemList = self.get_items
         for items in itemList:
             if (Item.hashtag == str) and (not isinstance(str, Item.hashtag)):
-                ReturnList.append(Item)
+                ReturnList.append(Item.hashtag)
         return ReturnList.sort()
 
     def add_item(self, item_name: str):
