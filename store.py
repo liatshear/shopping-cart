@@ -35,16 +35,34 @@ class Store:
         for items in itemList:
             if (Item.hashtag == str) and (not isinstance(str, Item.hashtag)):
                 ReturnList.append(Item)
-        return ReturnList.sort() 
+        return ReturnList.sort()
 
     def add_item(self, item_name: str):
-        # TODO: Complete
-        pass
+        count = 0
+        itemList = self.get_items
+        if isinstance(str, self._shopping_cart):
+            raise ItemAlreadyExistsError("This item already Exists")
+        for items in itemList:
+            if (str == Item.name) or (str in Item.name):
+                self.shopping_cart.add_item(self, Item)
+                count+= 1
+        if count == 0:
+            raise ItemNotExistError("ItemA NOt Exist Error")
+        if count > 1:
+            raise TooManyMatchesError("Too many items matched")
 
     def remove_item(self, item_name: str):
-        # TODO: Complete
-        pass
+        itemList = self.get_items
+        count = 0
+        for items in itemList:
+            if (Item.name == str) or (str in Item.name):
+                count +=1
+                if count == 1:
+                    self._shopping_cart.remove_item(self, str)
+                else:
+                    raise TooManyMatchesError("Too many matches found")
+        if count == 0:
+            raise ItemNotExistError("Item does not exist")
 
     def checkout(self) -> int:
-        # TODO: Complete
-        pass
+         return self._shopping_cart.get_subtotal(self)
