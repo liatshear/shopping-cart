@@ -26,7 +26,7 @@ class Store:
         itemList = self.get_items
         for items in itemList:
             if(str in Item) or (isinstance(str, Item)):
-                ReturnList.append(Item)
+                ReturnList.append(self._convert_to_item_objects(items_raw)
         return ReturnList.sort()
 
     def search_by_hashtag(self, hashtag: str) -> list:
