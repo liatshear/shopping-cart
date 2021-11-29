@@ -22,12 +22,20 @@ class Store:
         return self._items
 
     def search_by_name(self, item_name: str) -> list:
-        # TODO: Complete
-        pass
+           ReturnList = []
+        itemList = self.get_items
+        for items in itemList:
+            if(str in Item) or (isinstance(str, Item)):
+                ReturnList.append(Item)
+        return ReturnList.sort()
 
     def search_by_hashtag(self, hashtag: str) -> list:
-        # TODO: Complete
-        pass
+          ReturnList = []
+        itemList = self.get_items
+        for items in itemList:
+            if (Item.hashtag == str) and (not isinstance(str, Item.hashtag)):
+                ReturnList.append(Item)
+        return ReturnList.sort() 
 
     def add_item(self, item_name: str):
         # TODO: Complete
