@@ -27,7 +27,7 @@ class Store:
         ReturnList = []
         itemList = self.get_items()
         for item in itemList:
-            if((item_name in self._items) or (item_name == self._items)):
+            if((item_name in item.name) or (item_name == item.name)):
                 ReturnList.append(item)
         sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
         sorted_list = sorted_list.sort()
@@ -37,7 +37,7 @@ class Store:
         ReturnList = []
         itemList = self.get_items()
         for item in itemList:
-            if((item.hashtag == hashtag) and (not hashtag in item.hashtag)):
+            if((item.hashtag == hashtag) and (len(hashtag) == len(item.hashtag))):
                 ReturnList.append(item)
         sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
         sorted_list = sorted_list.sort()
@@ -46,7 +46,7 @@ class Store:
     def add_item(self, item_name: str):
         count = 0
         itemList = self.get_items()
-        for item in self._shopping_cart:   
+        for item in self._items:   
             if(item.name == item_name):
                 raise ItemAlreadyExistsError("This item already e[xists")
         for item in itemList:
