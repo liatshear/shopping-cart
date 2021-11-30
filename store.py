@@ -2,6 +2,8 @@ import yaml
 
 from item import Item
 from shopping_cart import ShoppingCart
+from errors import ItemNotExistError, ItemAlreadyExistsError, TooManyMatchesError
+
 
 class Store:
     def __init__(self, path):
@@ -34,10 +36,12 @@ class Store:
     def search_by_hashtag(self, hashtag: str) -> list:
         ReturnList = []
         itemList = self.get_items
-        for items in itemList:
-            if (Item.hashtag == str) and (not isinstance(str, Item.hashtag)):
-                ReturnList.append(Item.hashtag)
-        return ReturnList.sort()
+        for item in itemList:
+            if((item.hashtag == hashtag) and (not hashtag in item.hashtag)):
+                ReturnList.append(item)
+        sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
+        sorted_list = sorted_list.sort()
+        return sorted_list
 
     def add_item(self, item_name: str):
         count = 0
