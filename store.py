@@ -63,15 +63,15 @@ class Store:
     def remove_item(self, item_name: str):
         itemList = self.get_items
         count = 0
-        for items in itemList:
-            if (Item.name == str) or (str in Item.name):
+        for item in itemList:
+            if((item.name == item_name) or (item_name in item.name)):
                 count +=1
                 if count == 1:
-                    self._shopping_cart.remove_item(self, str)
-                else:
+                    self._shopping_cart.remove(item)
+                elif count > 1:
                     raise TooManyMatchesError("Too many matches found")
         if count == 0:
             raise ItemNotExistError("Item does not exist")
 
     def checkout(self) -> int:
-         return self._shopping_cart.get_subtotal(self)
+         return self._shopping_cart.get_subtotal()
