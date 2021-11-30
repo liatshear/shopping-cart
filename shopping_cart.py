@@ -1,4 +1,4 @@
-from _typeshed import Self
+
 from item import Item
 from errors import ItemNotExistError, ItemAlreadyExistsError
 
