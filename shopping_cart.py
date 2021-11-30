@@ -1,9 +1,10 @@
 from item import Item
+from errors import ItemNotExistError, ItemAlreadyExistsError
 
 
 class ShoppingCart:
     def add_item(self, item: Item):
-        if not isinstance(Item, self):
+        if not isinstance(item, Item):
             self.items.append(Item)
         else:
             raise ItemAlreadyExistsError("Item Already Exists Error")
