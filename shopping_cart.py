@@ -17,7 +17,7 @@ class ShoppingCart:
                 self._items.remove(item)
                 break
         else:
-            raise ItemNotExistError("Item does not Exist Error")
+            raise ItemNotExistError("Item doesn't Exist Error")
 
     def get_subtotal(self) -> int:
         total = 0
