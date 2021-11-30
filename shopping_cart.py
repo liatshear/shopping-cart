@@ -1,3 +1,4 @@
+from _typeshed import Self
 from item import Item
 from errors import ItemNotExistError, ItemAlreadyExistsError
 
@@ -7,17 +8,19 @@ class ShoppingCart:
         if item not in self.items:
             self.items.append(item)
         else:
-            raise ItemAlreadyExistsError("Item Already Exists Error")
+            raise ItemAlreadyExistsError("Item Already Exists")
 
 
     def remove_item(self, item_name: str):
-        if str in self.items.name:
-            self.items.remove(str)
+        for item in self.items:
+            if item.name == item_name:
+                self.items.remove(item)
+                break
         else:
-            raise ItemNotExistError("ItemA NOt Exist Error")
+            raise ItemNotExistError("Item does not Exist Error")
 
     def get_subtotal(self) -> int:
-        total =0
-        for self in ShoppingCart:
-            total += self.price
-        print(total)
+        total = 0
+        for item in self.items:
+            total += item.price
+        return total
