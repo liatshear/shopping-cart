@@ -46,17 +46,20 @@ class Store:
     def add_item(self, item_name: str):
         count = 0
         itemList = self.get_items
-        if isinstance(str, self._shopping_cart):
-            raise ItemAlreadyExistsError("This item already Exists")
-        for items in itemList:
-            if (str == Item.name) or (str in Item.name):
-                self.shopping_cart.add_item(self, Item)
-                count+= 1
+        for item in self._shopping_cart:   
+            if(item.name == item_name):
+                raise ItemAlreadyExistsError("This item already Exists")
+        for item in itemList:
+                if((item_name == item.name) or (item_name in item.name)):
+                    if count == 1:
+                        raise TooManyMatchesError("Too many items matched")
+                    else:
+                        self._shopping_cart.append(item)
+                        count+=1
         if count == 0:
             raise ItemNotExistError("ItemA NOt Exist Error")
-        if count > 1:
-            raise TooManyMatchesError("Too many items matched")
-
+        
+            
     def remove_item(self, item_name: str):
         itemList = self.get_items
         count = 0
