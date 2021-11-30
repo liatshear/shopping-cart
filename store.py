@@ -25,7 +25,7 @@ class Store:
 
     def search_by_name(self, item_name: str) -> list:
         ReturnList = []
-        itemList = self.get_items
+        itemList = self.get_items()
         for item in itemList:
             if((item_name in self._items) or (item_name == self._items)):
                 ReturnList.append(item)
@@ -35,7 +35,7 @@ class Store:
 
     def search_by_hashtag(self, hashtag: str) -> list:
         ReturnList = []
-        itemList = self.get_items
+        itemList = self.get_items()
         for item in itemList:
             if((item.hashtag == hashtag) and (not hashtag in item.hashtag)):
                 ReturnList.append(item)
@@ -45,10 +45,10 @@ class Store:
 
     def add_item(self, item_name: str):
         count = 0
-        itemList = self.get_items
+        itemList = self.get_items()
         for item in self._shopping_cart:   
             if(item.name == item_name):
-                raise ItemAlreadyExistsError("This item already exists")
+                raise ItemAlreadyExistsError("This item already e[xists")
         for item in itemList:
                 if((item_name == item.name) or (item_name in item.name)):
                     if count == 1:
@@ -61,7 +61,7 @@ class Store:
         
             
     def remove_item(self, item_name: str):
-        itemList = self.get_items
+        itemList = self.get_items()
         count = 0
         for item in itemList:
             if((item.name == item_name) or (item_name in item.name)):
@@ -74,4 +74,4 @@ class Store:
             raise ItemNotExistError("Item does not exist")
 
     def checkout(self) -> int:
-         return self._shopping_cart.get_subtotal()
+         return self.get_subtotal()
