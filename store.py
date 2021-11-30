@@ -27,7 +27,9 @@ class Store:
         for item in itemList:
             if((item_name in self._items) or (item_name == self._items)):
                 ReturnList.append(item)
-        return ReturnList.sort()
+        sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
+        sorted_list = sorted_list.sort()
+        return sorted_list
 
     def search_by_hashtag(self, hashtag: str) -> list:
         ReturnList = []
