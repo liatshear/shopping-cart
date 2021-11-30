@@ -48,7 +48,7 @@ class Store:
         itemList = self.get_items
         for item in self._shopping_cart:   
             if(item.name == item_name):
-                raise ItemAlreadyExistsError("This item already Exists")
+                raise ItemAlreadyExistsError("This item already exists")
         for item in itemList:
                 if((item_name == item.name) or (item_name in item.name)):
                     if count == 1:
