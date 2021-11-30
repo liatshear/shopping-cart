@@ -11,7 +11,7 @@ class ShoppingCart:
 
 
     def remove_item(self, item_name: str):
-        if isinstance(str, self):
+        if isinstance(str, item):
             self.items.remove(str)
         else:
             raise ItemNotExistError("ItemA NOt Exist Error")
