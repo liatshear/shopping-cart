@@ -22,15 +22,15 @@ class Store:
         return self._items
 
     def search_by_name(self, item_name: str) -> list:
-           ReturnList = []
+        ReturnList = []
         itemList = self.get_items
-        for items in itemList:
-            if(str in Item) or (isinstance(str, Item)):
-                ReturnList.append(self._convert_to_item_objects(items_raw)
+        for item in itemList:
+            if((item_name in self._items) or (item_name == self._items)):
+                ReturnList.append(item)
         return ReturnList.sort()
 
     def search_by_hashtag(self, hashtag: str) -> list:
-          ReturnList = []
+        ReturnList = []
         itemList = self.get_items
         for items in itemList:
             if (Item.hashtag == str) and (not isinstance(str, Item.hashtag)):
