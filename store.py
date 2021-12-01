@@ -104,4 +104,6 @@ class Store:
         
 
     def checkout(self) -> int:
-        return self._shopping_cart.get_subtotal(self)
+        if len(ShoppingCart.items) == 0:
+            return 0
+        return Store.items.get_subtotal(self)
