@@ -1,4 +1,5 @@
 import yaml
+import collections
 
 from item import Item
 from shopping_cart import ShoppingCart
@@ -7,8 +8,7 @@ from errors import ItemNotExistError, ItemAlreadyExistsError, TooManyMatchesErro
 
 class Store:
 
-    items = list(ShoppingCart.items)
-    
+    items = []
     def __init__(self, path):
         with open(path) as inventory:
             items_raw = yaml.load(inventory, Loader=yaml.FullLoader)['items']
@@ -30,8 +30,8 @@ class Store:
 
     def check_hashtag(self, hashtag:str):
         itemList = self.get_items()
-        for item in Store.items:
-            for item.hashtag in Store.items.hashtags:
+        for item in self._shopping_cart.items:
+            for item.hashtag in self._shopping_cart.items.hashtags:
                 if(item.hashtag == hashtag):
                     return False ## item in cart therefore return False
         for item in itemList: ## iterate through store to check hashtags but not substring
@@ -46,7 +46,7 @@ class Store:
     def check_name(self, item_name:str):
         check = 0 ## variable to check if item is in cart or not a match
         StoreitemList = self.get_items() ## put store items into list
-        for item in Store.items: ## iterate through shopping cart to check if item exists
+        for item in self._shopping_cart.items: ## iterate through shopping cart to check if item exists
             if(item_name == item.name):
                 return False ## item already in cart
         for item in StoreitemList: ## iterate through the items in the store to see if the search matches
@@ -65,6 +65,7 @@ class Store:
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
         filtered_list = filter(self.check_hashtag(hashtag), self.get_items)
         returnList = list(filtered_list)
+        OrderedList = []
         sorted_list = returnList.sort(key = lambda x: int(x[1:]))
         sorted_list = sorted_list.sort()
         return sorted_list
@@ -91,7 +92,7 @@ class Store:
             
     def remove_item(self, item_name: str):
         count = 0 ## variable to check multiple matches
-        for item in  Store.items:
+        for item in self._shopping_cart.items:
             if((item.name == item_name) or (item_name in item.name)):
                 count +=1
                 itemMatch = item
@@ -104,6 +105,6 @@ class Store:
         
 
     def checkout(self) -> int:
-        if len(ShoppingCart.items) == 0:
+        if len(self._shopping_cart.items) == 0:
             return 0
-        return Store.items.get_subtotal(self)
+        return ShoppingCart.get_subtotal(self._shopping_cart)
