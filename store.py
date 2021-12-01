@@ -47,36 +47,27 @@ class Store:
                 return False
         for item in itemList: ## iterate through the items in the store to see if the search matches
             if((item_name in item.name) or (item_name == item.name)): ## if the search matches/is substring of item
-                check = 1
-       
-            
+                check = 1            
         if check == 1:
             return True
         else:
             return False
 
 
-
-
     def search_by_name(self, item_name: str) -> list:
-        ReturnList = []
-        itemList = self.get_items()
-        for item in itemList:
-            if((item_name in item.name) or (item_name == item.name)):
-                ReturnList.append(item)
-        sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
+        filtered_list = filter(self.check_name, self.get_items)
+        returnList = list(filtered_list)
+        sorted_list = returnList.sort(key = lambda x: int(x[1:]))
         sorted_list = sorted_list.sort()
         return sorted_list
 
     def search_by_hashtag(self, hashtag: str) -> list:
-        ReturnList = []
-        itemList = self.get_items()
-        for item in itemList:
-            if((item.hashtag == hashtag) and (len(hashtag) == len(item.hashtag))):
-                ReturnList.append(item)
-        sorted_list = ReturnList.sort(key = lambda x: int(x[1:]))
+        filtered_list = filter(self.check_hashtag, self.get_items)
+        returnList = list(filtered_list)
+        sorted_list = returnList.sort(key = lambda x: int(x[1:]))
         sorted_list = sorted_list.sort()
         return sorted_list
+        
 
     def add_item(self, item_name: str):
         count = 0
@@ -89,7 +80,7 @@ class Store:
                     if count == 1:
                         raise TooManyMatchesError("Too many items matched")
                     else:
-                        ShoppingCart().add_item(self, item)
+                        ShoppingCart.add_item(self, item)
                         count+=1
         if count == 0:
             raise ItemNotExistError("Item does not Exist Error")
@@ -101,11 +92,11 @@ class Store:
             if((item.name == item_name) or (item_name in item.name)):
                 count +=1
                 if count == 1:
-                    ShoppingCart().remove_item(self, item.name)
+                    ShoppingCart.remove_item(self, item.name)
                 elif count > 1:
                     raise TooManyMatchesError("Too many matches found")
         if count == 0:
             raise ItemNotExistError("Item does not exist")
 
     def checkout(self) -> int:
-         return ShoppingCart().get_subtotal(self)
+         return ShoppingCart.get_subtotal(self)
