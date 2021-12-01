@@ -7,7 +7,8 @@ from errors import ItemNotExistError, ItemAlreadyExistsError, TooManyMatchesErro
 
 class Store:
 
-    items = []
+    items = list(ShoppingCart.items)
+    
     def __init__(self, path):
         with open(path) as inventory:
             items_raw = yaml.load(inventory, Loader=yaml.FullLoader)['items']
@@ -29,7 +30,7 @@ class Store:
 
     def check_hashtag(self, hashtag:str):
         itemList = self.get_items()
-        for item in ShoppingCart.items:
+        for item in Store.items:
             for item.hashtag in ShoppingCart.items.hashtags:
                 if(item.hashtag == hashtag):
                     return False ## item in cart therefore return False
@@ -45,7 +46,7 @@ class Store:
     def check_name(self, item_name:str):
         check = 0 ## variable to check if item is in cart or not a match
         itemList = self.get_items() ## put store items into list
-        for item in ShoppingCart.items: ## iterate through shopping cart to check if item exists
+        for item in Store.items: ## iterate through shopping cart to check if item exists
             if(item_name == item.name):
                 return False ## item already in cart
         for item in itemList: ## iterate through the items in the store to see if the search matches
@@ -72,7 +73,7 @@ class Store:
     def add_item(self, item_name: str):
         count = 0 ## variable to check if there are more then 1 match
         itemList = self.get_items()
-        for item in ShoppingCart.items:   ## begin to iterate through items
+        for item in self._shopping_cart.items:   ## begin to iterate through items
             if(item.name == item_name): 
                 raise ItemAlreadyExistsError("This item already exists") ## item already in the car
         for item in itemList: ## look at items in the store
@@ -90,7 +91,7 @@ class Store:
             
     def remove_item(self, item_name: str):
         count = 0 ## variable to check multiple matches
-        for item in ShoppingCart.items:
+        for item in Store.items:
             if((item.name == item_name) or (item_name in item.name)):
                 count +=1
                 itemMatch = item
@@ -103,4 +104,4 @@ class Store:
         
 
     def checkout(self) -> int:
-         return ShoppingCart.get_subtotal(self)
+        return self._shopping_cart.get_subtotal(self)
