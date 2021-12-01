@@ -23,6 +23,8 @@ class ShoppingCart:
 
     def get_subtotal(self) -> int:
         total = 0
+        if not self.items:
+            return 0
         for item in self.items: ## iterate through items
             total += item.price ## each time add the price of the item
         return total
