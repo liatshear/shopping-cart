@@ -4,6 +4,7 @@ from errors import ItemNotExistError, ItemAlreadyExistsError
 
 
 class ShoppingCart:
+    items = []
     def add_item(self, item: Item):
         if item in self.items:
             raise ItemAlreadyExistsError("Item Already Exists")
