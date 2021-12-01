@@ -34,7 +34,7 @@ class Store:
             for item.hashtag in self._shopping_cart.items.hashtags:
                 if(item.hashtag == hashtag):
                     return False ## item in cart therefore return False
-        for item in itemList: ## iterate through store to check hashtags but not substring
+        for item in self._items: ## iterate through store to check hashtags but not substring
             for item.hashtag in item.hashtags:
                 if((item.hashtag == hashtag) and (len(hashtag) == len(item.hashtag))):
                     return True ## item is in the store AND not in the cart
@@ -49,26 +49,23 @@ class Store:
         for item in self._shopping_cart.items: ## iterate through shopping cart to check if item exists
             if(item_name == item.name):
                 return False ## item already in cart
-        for item in StoreitemList: ## iterate through the items in the store to see if the search matches
+        for item in self._items: ## iterate through the items in the store to see if the search matches
             if((item_name in item.name) or (item_name == item.name)): ## if the search matches/is substring of item
                 return True ## item not in cart AND in store
         return False ## item not in cart AND not in store 
 
 
+
+
     def search_by_name(self, item_name: str) -> list:
-        filtered = filter(self.check_name(item_name), self.get_items) ## filter method to get all items relevant into list
-        returnList = list(filtered) ## put it into a list 
-        sorted_list = returnList.sort(key = lambda x: int(x[1:])) ## sort bynumber
-        sorted_list = sorted_list.sort() ## sort lexicographically 
-        return sorted_list ## return sorted list
+        returnList = list(filter(self.check_name(item_name), self._items)) ## filter method to get all items relevant into list
+        return returnList.sort(key=lambda x: x.get('name'))
+
 
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
-        filtered_list = filter(self.check_hashtag(hashtag), self.get_items)
-        returnList = list(filtered_list)
-        OrderedList = []
-        sorted_list = returnList.sort(key = lambda x: int(x[1:]))
-        sorted_list = sorted_list.sort()
-        return sorted_list
+        returnList = list(filter(self.check_hashtag(hashtag), self._items))
+        return returnList.sort(key=lambda x: x.get('name'))
+       
         
 
     def add_item(self, item_name: str):
@@ -77,7 +74,7 @@ class Store:
         for item in self._shopping_cart.items:   ## begin to iterate through items
             if(item.name == item_name): 
                 raise ItemAlreadyExistsError("This item already exists") ## item already in the car
-        for item in itemList: ## look at items in the store
+        for item in self._items: ## look at items in the store
                 if((item_name == item.name) or (item_name in item.name)): ## find a match in store
                     count +=1 ## each time theres a match
                     itemMatch = item ## save which item it is that matched for the case that there is only one match
@@ -107,4 +104,4 @@ class Store:
     def checkout(self) -> int:
         if len(self._shopping_cart.items) == 0:
             return 0
-        return ShoppingCart.get_subtotal(self._shopping_cart)
+        return ShoppingCart.self._shopping_cart.get_subtotal()
