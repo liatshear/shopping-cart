@@ -6,6 +6,9 @@ from errors import ItemNotExistError, ItemAlreadyExistsError, TooManyMatchesErro
 
 
 class Store:
+
+    items = []
+    ShoppingCart = []
     def __init__(self, path):
         with open(path) as inventory:
             items_raw = yaml.load(inventory, Loader=yaml.FullLoader)['items']
