@@ -16,7 +16,7 @@ class ShoppingCart:
     def remove_item(self, item_name: str):
         for item in self.items:
             if item.name == item_name: ## check if the item name is in cart
-                self.items.pop(item) ## remove from cart
+                self.items.remove(item) ## remove from cart
                 break
         else: ## item not in cart
             raise ItemNotExistError("Item doesn't Exist Error")
