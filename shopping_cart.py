@@ -1,3 +1,4 @@
+import itertools
 from item import Item
 from errors import ItemNotExistError, ItemAlreadyExistsError
 

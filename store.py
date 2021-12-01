@@ -31,7 +31,7 @@ class Store:
     def check_hashtag(self, hashtag:str):
         itemList = self.get_items()
         for item in Store.items:
-            for item.hashtag in ShoppingCart.items.hashtags:
+            for item.hashtag in Store.items.hashtags:
                 if(item.hashtag == hashtag):
                     return False ## item in cart therefore return False
         for item in itemList: ## iterate through store to check hashtags but not substring
@@ -45,11 +45,11 @@ class Store:
 
     def check_name(self, item_name:str):
         check = 0 ## variable to check if item is in cart or not a match
-        itemList = self.get_items() ## put store items into list
+        StoreitemList = self.get_items() ## put store items into list
         for item in Store.items: ## iterate through shopping cart to check if item exists
             if(item_name == item.name):
                 return False ## item already in cart
-        for item in itemList: ## iterate through the items in the store to see if the search matches
+        for item in StoreitemList: ## iterate through the items in the store to see if the search matches
             if((item_name in item.name) or (item_name == item.name)): ## if the search matches/is substring of item
                 return True ## item not in cart AND in store
         return False ## item not in cart AND not in store 
@@ -91,7 +91,7 @@ class Store:
             
     def remove_item(self, item_name: str):
         count = 0 ## variable to check multiple matches
-        for item in Store.items:
+        for item in  Store.items:
             if((item.name == item_name) or (item_name in item.name)):
                 count +=1
                 itemMatch = item
