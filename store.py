@@ -1,3 +1,4 @@
+from os import name
 import yaml
 import collections
 
@@ -58,13 +59,13 @@ class Store:
 
 
     def search_by_name(self, item_name: str) -> list:
-        returnList = list(filter(self.check_name(item_name), self._items)) ## filter method to get all items relevant into list
-        return returnList.sort(key=lambda x: x.get('name'))
+        returnList = list(filter(self.check_name(item_name), self)) ## filter method to get all items relevant into list
+        return returnList.sort(key=lambda x: x.get(self.item.name))
 
 
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
         returnList = list(filter(self.check_hashtag(hashtag), self._items))
-        return returnList.sort(key=lambda x: x.get('name'))
+        return returnList.sort(key=lambda x: x.get(name))
        
         
 
@@ -81,7 +82,7 @@ class Store:
         if count > 1: ## more then one match 
             raise TooManyMatchesError("Too many items matched")
         if count == 0: ## no matches
-            raise ItemNotExistError("Item does not Exist Error")
+            raise ItemNotExistError("Item does not exist")
         if count == 1: ## exactly one match
             ShoppingCart.add_item(self, itemMatch)
              
