@@ -54,7 +54,7 @@ class Store:
             if(str(item_name) == str(item.name)):
                 return False ## item already in cart
         for item in itemList: ## iterate through the items in the store to see if the search matches
-            if((str(item_name) in str(item.name)) or (str(item_name) == str(item.name))): ## if the search matches/is substring of item
+            if str(item_name) in str(item.name): ## if the search matches/is substring of item
                 return True ## item not in cart AND in store
         return False ## item not in cart AND not in store 
 
@@ -63,9 +63,9 @@ class Store:
 
     def search_by_name(self, item_name: str) -> list:
         returnList = list(filter(self.check_name, self.get_items())) ## filter method to get all items relevant into list
-        ##expected_items_list = list(filter(lambda item: item_name in item.name, self.get_items()))
-        return returnList.sort(key=lambda item: item.name)
-
+       ## expected_items_list = list(filter(lambda item: item_name in item.name, self.get_items()))
+        returnList.sort(key=lambda item: item.name)
+        return returnList
 
 
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
