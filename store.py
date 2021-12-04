@@ -1,6 +1,5 @@
 from os import name
 import yaml
-import collections
 
 
 from item import Item
@@ -27,51 +26,22 @@ class Store:
                      item['description'])
                 for item in items_raw]
 
+
     def get_items(self) -> list:
         return self._items
+
     ## get list of hashtags of all items in the store
     def getHashtagList(self) -> list:
         hashtagList = []
         for item in self.items:
             hashtagList.extend(item.hashtags)
         return hashtagList
-    ##get list of all the names of the items in the store
-    def getNameList(self) -> list:
-        nameList = []
-        for item in self.items:
-            nameList.append(item.name)
+
 
     ##helper function to check through hashtag 1) item not in cart 2) item is in store. to be used in the filter method
 
-    def check_hashtag(self, hashtagCheck, item):
-        ## iterate through shopping cart to check if item is in cart
-        shoppingCarttags = self._shopping_cart.getHashtagList()
-        storeTags = self.getHashtagList()
-        if hashtagCheck.any(shoppingCarttags): 
-             ## item in cart therefore return False
-            return False        
-        ## if the search matches/is one of the hashtags of thesubstring of item AND not in the cart
-        if hashtagCheck.any(storeTags): 
-                return True  ## item is in the store AND not in the cart
-        ## item is not in cart but also not in store
-        return False 
-
-    ## method to check via name 1) item not in cart 2) item exists in store 
-
-    def check_name(item, item_name, self):
-        ## iterate through shopping cart to check if item is in cart
-        Cartnames = self._shopping_cart.getNameList()
-        itemList = self.get_items()
-        if item_name.any(Cartnames): 
-            return False 
-        ## if the search matches/is substring of item in the store
-        for item in itemList:
-            if item_name in item.name: 
-                return True 
-        ## item not in cart AND not in store 
-        return False 
     
-    def sortHashtags(self, returnList):
+    ##def sortHashtags(returnList, self):
         countList = []
         HashtagListCart = self._shopping_cart.getHashtagList()
         for item in returnList:
@@ -85,19 +55,54 @@ class Store:
 
     def search_by_name(self, item_name: str) -> list:
         ## filter method to get all items relevant into list, sort by hashtag frequency
-        returnList = list(filter(self.check_name(item_name), self.get_items()))  
-        returnList.sortHashtags()          
+        ##returnList = list(filter(self.check_name, self.get_items()))  
+        returnList = []
+        ShoppingCartnames = self._shopping_cart.getNameList()
+        returnListone = list(filter(lambda item: item_name in item.name, self.get_items()))
+        for item in returnListone:
+            if not item_name in ShoppingCartnames:
+                returnList.append(item)
+        countList = []
+        HashtagListCart = self._shopping_cart.getHashtagList()
+        for item in returnList:
+            for item.hashtag in item.hashtags:
+                x = HashtagListCart.count(item.hashtag)
+                countList.append(x)
+        returnList = list(zip(HashtagListCart, countList))
+        returnList.sort(key = lambda x: x[1], reverse = True)
+        returnListfinal = []
+        for tuple in returnList:
+            returnListfinal.append(returnList[0])      
+        ##returnList.sortHashtags()          
         ##returnList.sort(key=lambda item: (item.name))
-        return returnList
+        return returnListfinal
 
 
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
         hashtagCheck = hashtag
+        returnList = []
+        shoppingCarttags = self._shopping_cart.getHashtagList()
+        storeTags = self.getHashtagList()
         ## filter method to get all relevant items into a list with hashtag matches
-        returnList = list(filter(self.check_hashtag(hashtagCheck), self.get_items()))
-        returnList.sortHashtags()
+        returnListone = list(filter(lambda item: hashtagCheck in item.hashtags, self.get_items()))
+        ##returnList = list(filter(self.check_hashtag, self.get_items()))
+        for item in returnListone:
+            if not hashtagCheck in shoppingCarttags:
+                returnList.append(item)
+        countList = []
+        HashtagListCart = self._shopping_cart.getHashtagList()
+        for item in returnList:
+            for item.hashtag in item.hashtags:
+                x = HashtagListCart.count(item.hashtag)
+                countList.append(x)
+        returnList = list(zip(HashtagListCart, countList))
+        returnList.sort(key = lambda x: x[1], reverse = True)
+        returnListfinal = []
+        for tuple in returnList:
+            returnListfinal.append(returnList[0])
+        ##returnList.sortHashtags()
         ##returnList.sort(key=lambda item: item.name)
-        return returnList       
+        return returnListfinal     
         
 
     def add_item(self, item_name: str):
