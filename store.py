@@ -38,43 +38,33 @@ class Store:
         return hashtagList
 
 
-    ##helper function to check through hashtag 1) item not in cart 2) item is in store. to be used in the filter method
-
-    
-    ##def sortHashtags(returnList, self):
-        countList = []
-        HashtagListCart = self._shopping_cart.getHashtagList()
-        for item in returnList:
-            for item.hashtag in item.hashtags:
-                x = HashtagListCart.count(item.hashtag)
-                countList.append(x)
-        returnList = list(zip(HashtagListCart, countList))
-        returnList.sort(key = lambda x: x[1], reverse = True)
-        returnListUnzip = list(zip(*returnList))
-        returnList = returnListUnzip[0]
-
     def search_by_name(self, item_name: str) -> list:
-        ## filter method to get all items relevant into list, sort by hashtag frequency
-        ##returnList = list(filter(self.check_name, self.get_items()))  
         returnList = []
         ShoppingCartnames = self._shopping_cart.getNameList()
-        returnListone = list(filter(lambda item: item_name in item.name, self.get_items()))
-        for item in returnListone:
+        HashtagListCart = self._shopping_cart.getHashtagList()
+        ##filter method to get all the items that are substrings of store items
+        returnListStoreItems = list(filter(lambda item: item_name in item.name, self.get_items()))
+        ##only add store items that are also NOT in the shopping cart
+        for item in returnListStoreItems:
             if not item_name in ShoppingCartnames:
                 returnList.append(item)
+        ## count how many times there is a match with a hashtag in the cart item
         countList = []
-        HashtagListCart = self._shopping_cart.getHashtagList()
         for item in returnList:
+            count = 0
+            ## count the amount of times the hashtags appead in the cart list
             for item.hashtag in item.hashtags:
-                x = HashtagListCart.count(item.hashtag)
-                countList.append(x)
-        returnList = list(zip(HashtagListCart, countList))
+                count += HashtagListCart.count(item.hashtag)
+            countList.append(count)
+        ## zip the lists with their item and their count
+        returnList = list(zip(returnList, countList))
+        ## sort the list based on hashtag frequency
         returnList.sort(key = lambda x: x[1], reverse = True)
         returnListfinal = []
-        for tuple in returnList:
-            returnListfinal.append(returnList[0])      
-        ##returnList.sortHashtags()          
-        ##returnList.sort(key=lambda item: (item.name))
+        ## create new list with just the items and not their count
+        for r in returnList:
+            returnListfinal.append(r[0])              
+        returnListfinal.sort(key=lambda item: item.name)
         return returnListfinal
 
 
@@ -92,16 +82,17 @@ class Store:
         countList = []
         HashtagListCart = self._shopping_cart.getHashtagList()
         for item in returnList:
+            count = 0
             for item.hashtag in item.hashtags:
-                x = HashtagListCart.count(item.hashtag)
-                countList.append(x)
-        returnList = list(zip(HashtagListCart, countList))
+                count += HashtagListCart.count(item.hashtag)
+            countList.append(count)
+        returnList = list(zip(returnList, countList))
         returnList.sort(key = lambda x: x[1], reverse = True)
         returnListfinal = []
-        for tuple in returnList:
-            returnListfinal.append(returnList[0])
+        for r in returnList:
+            returnListfinal.append(r[0])
         ##returnList.sortHashtags()
-        ##returnList.sort(key=lambda item: item.name)
+        returnListfinal.sort(key=lambda item: item.name)
         return returnListfinal     
         
 
