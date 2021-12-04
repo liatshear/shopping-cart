@@ -30,7 +30,7 @@ class Store:
 
     ##helper function to check through hashtag 1) item not in cart 2) item is in store. to be used in the filter method
 
-    def check_hashtag(hashtagCheck: str, item, self):
+    def check_hashtag(hashtagCheck, item, self):
         ## iterate through shopping cart to check if item is in cart
         if hashtagCheck.any(self._shopping_cart.items.hashtags): 
              ## item in cart therefore return False
@@ -63,7 +63,7 @@ class Store:
                 x = HashtagListCart.count(item.hashtag)
                 countList.append(x)
         HashtagListCart = zip(HashtagListCart, countList)
-        HashtagListCart.sort(key = lambda x: x[1])
+        HashtagListCart.sort(key = lambda x: x[1], reverse = True)
 
     def search_by_name(self, item_name: str) -> list:
         
@@ -104,7 +104,7 @@ class Store:
     def remove_item(self, item_name: str):
         count = 0 ## variable to check multiple matches
         for item in self._shopping_cart.items:
-            if item_name == item.name:
+            if ((item_name == item.name) or (item_name in item.name)):
                 count +=1
                 itemMatch = item
         if count == 1: ## only one item matched in cart
