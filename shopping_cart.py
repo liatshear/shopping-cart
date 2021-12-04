@@ -34,3 +34,8 @@ class ShoppingCart:
             hashtagList.extend(item.hashtags)
         return hashtagList
 
+    def getNameList(self) -> list:
+        nameList = []
+        for item in self.items:
+            nameList.append(item.name)
+        return nameList
