@@ -24,18 +24,21 @@ class ShoppingCart:
 
     def get_subtotal(self) -> int:
         if self.items:
+            ## iterate through to get the price and add to the total price
             return sum(item.price for item in self.items)
         else:
             return 0
 
     def getHashtagList(self) -> list:
         hashtagList = []
+        ## iterate through items and add their individual hashtags to a list
         for item in self.items:
             hashtagList.extend(item.hashtags)
         return hashtagList
 
     def getNameList(self) -> list:
         nameList = []
+        ## iterate through and get the names of all the items in the shopping cart
         for item in self.items:
             nameList.append(item.name)
         return nameList
