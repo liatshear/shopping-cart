@@ -30,48 +30,56 @@ class Store:
 
     ##helper function to check through hashtag 1) item not in cart 2) item is in store. to be used in the filter method
 
-    def check_hashtag(self, hashtag:str):
-        itemList = self.get_items()
-        ## check if item is in cart
-        for item in self._shopping_cart.items:
-            for item.hashtag in self._shopping_cart.items.hashtags:
-                if(str(item.hashtag) == str(hashtag)):
-                    return False ## item in cart therefore return False
-        ## iterate through store to check hashtags but not substring
-        for item in itemList: 
-            for item.hashtag in item.hashtags:
-                if(str(item.hashtag) == str(hashtag)):
-                    return True ## item is in the store AND not in the cart
-        
-        return False ## item is not in cart but also not in store
+    def check_hashtag(hashtagCheck: str, item, self):
+        ## iterate through shopping cart to check if item is in cart
+        if hashtagCheck.any(self._shopping_cart.items.hashtags): 
+             ## item in cart therefore return False
+            return False        
+        ## if the search matches/is one of the hashtags of thesubstring of item AND not in the cart
+        for hashtag in item.hashtags:
+            if hashtag == hashtagCheck: 
+                return True  ## item is in the store AND not in the cart
+        ## item is not in cart but also not in store
+        return False 
 
     ## method to check via name 1) item not in cart 2) item exists in store 
 
-    def check_name(self, item):
-        item_name = item.name
-        itemList = self.get_items() ## put store items into list
-        for item in self._shopping_cart.items: ## iterate through shopping cart to check if item exists
-            if(str(item_name) == str(item.name)):
-                return False ## item already in cart
-        for item in itemList: ## iterate through the items in the store to see if the search matches
-            if str(item_name) in str(item.name): ## if the search matches/is substring of item
-                return True ## item not in cart AND in store
-        return False ## item not in cart AND not in store 
-
-
-
+    def check_name(item_name: str, item, self):
+        ## iterate through shopping cart to check if item is in cart
+        if item_name.any(self._shopping_cart.items): 
+            return False 
+        ## if the search matches/is substring of item AND not in the cart
+        if item_name in item.name: 
+            return True 
+        ## item not in cart AND not in store 
+        return False 
+    
+    def sortHashtags(self, returnList):
+        count = 0
+        countList = []
+        HashtagListCart = self._shopping_cart.getHashtagList
+        for item in returnList:
+            for item.hashtag in item.hashtags:
+                x = HashtagListCart.count(item.hashtag)
+                countList.append(x)
+        HashtagListCart = zip(HashtagListCart, countList)
+        HashtagListCart.sort(key = lambda x: x[1])
 
     def search_by_name(self, item_name: str) -> list:
-        returnList = list(filter(self.check_name, self.get_items())) ## filter method to get all items relevant into list
-       ## expected_items_list = list(filter(lambda item: item_name in item.name, self.get_items()))
-        returnList.sort(key=lambda item: item.name)
+        
+        returnList = list(filter(item_name.check_name, self.get_items())) ## filter method to get all items relevant into list
+        ## expected_items_list = list(filter(lambda item: item_name in item.name, self.get_items())   
+        returnList.sortHashtags()          
+        returnList.sort(key=lambda item: (item.name))
         return returnList
 
 
     def search_by_hashtag(self, hashtag: str) -> list: ## same as before but now check using hashtag
-        returnList = list(filter(self.check_hashtag, self.get_items()))
-        return returnList.sort(key=lambda x: x.get(name))
-       
+        hashtagCheck = hashtag
+        returnList = list(filter(self.check_hashtag(hashtagCheck), self.get_items()))
+        returnList.sortHashtags()
+        returnList.sort(key=lambda item: item.name)
+        return returnList       
         
 
     def add_item(self, item_name: str):

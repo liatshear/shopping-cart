@@ -28,3 +28,9 @@ class ShoppingCart:
         else:
             return 0
 
+    def getHashtagList(self) -> list:
+        hashtagList = []
+        for item in self.items:
+            hashtagList.extend(item.hashtags)
+        return hashtagList
+
