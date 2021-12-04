@@ -26,6 +26,7 @@ class ShoppingCart:
         if self.items:
             ## iterate through to get the price and add to the total price
             return sum(item.price for item in self.items)
+            ## the list is empty
         else:
             return 0
 

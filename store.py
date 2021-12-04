@@ -141,5 +141,6 @@ class Store:
         ## check the cart isnt empty
         if self._shopping_cart.items:
             return self._shopping_cart.get_subtotal()
+        ## the list is empty
         else:
             return 0
