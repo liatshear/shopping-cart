@@ -1,5 +1,4 @@
 from store import Store
-
 POSSIBLE_ACTIONS = [
     'search_by_name',
     'search_by_hashtag',
@@ -32,8 +31,7 @@ def main():
         if action == 'exit':
             print('Goodbye!')
             return
-        getattr(store, action)(params)
-    
+        getattr(store, action)(params)    
         action, params = read_input()
 
 
